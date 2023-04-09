@@ -1,11 +1,15 @@
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 
-import React from "react";
+import { Context } from "../pages/_app.tsx";
 import Webcam from "react-webcam";
-import { useState } from "react";
+import { useRouter } from "next/router";
 
 const CameraFrame = () => {
-  const [photoSrc, setPhotoSrc] = useState<string | null>(null);
+  const { state } = useContext(Context);
+  const router = useRouter();
+  console.log(state);
+  const [photoSrc, setPhotoSrc] = useState<string | undefined>(undefined);
   const webcamRef = React.useRef<Webcam>(null);
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +31,12 @@ const CameraFrame = () => {
   }, [webcamRef, setPhotoSrc]);
 
   const handleSubmit = () => {
-    console.log("Captured photo:", photoSrc);
+    // send request to backend to get mood
+    state.dateOfSurvey = new Date().toLocaleDateString();
+    state.timeOfSurvey = new Date().toLocaleTimeString();
+    state.discoveredMood = "to be implemented";
+    state.photo = photoSrc;
+    router.push("/certificate");
   };
 
   const handleDownload = () => {
@@ -39,7 +48,7 @@ const CameraFrame = () => {
   };
 
   const handleRetake = () => {
-    setPhotoSrc(null);
+    setPhotoSrc(undefined);
     setError(null);
   };
 

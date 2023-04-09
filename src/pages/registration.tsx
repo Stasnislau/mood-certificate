@@ -2,19 +2,23 @@ import * as Yup from "yup";
 
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
+import { Context } from "../pages/_app.tsx";
+import { useContext } from "react";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 
 const Registration = () => {
+  const { state } = useContext(Context);
   interface FormValues {
     name: string;
     surname: string;
     predictedMood: string;
   }
-
+  const router = useRouter();
   const initialValues = {
-    name: "",
-    surname: "",
-    predictedMood: "",
+    name: state.name,
+    surname: state.surname,
+    predictedMood: state.predictedMood,
   };
   const validationSchema = Yup.object({
     name: Yup.string().required("Required"),
@@ -22,7 +26,10 @@ const Registration = () => {
     predictedMood: Yup.string().required("Required"),
   });
   const onSubmit = (values: FormValues) => {
-    console.log("Form data", values);
+    state.name = values.name;
+    state.surname = values.surname;
+    state.predictedMood = values.predictedMood;
+    router.push("/camera-frame");
   };
   const formik = useFormik({
     initialValues,
@@ -30,7 +37,11 @@ const Registration = () => {
     onSubmit,
   });
   return (
-    <Grid container spacing={2} sx={{ height: "100vh", backgroundColor: "#f9f9f9" }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{ height: "100vh", backgroundColor: "#f9f9f9" }}
+    >
       <Grid
         item
         xs={12}
@@ -39,7 +50,7 @@ const Registration = () => {
         <form onSubmit={formik.handleSubmit}>
           <Paper elevation={3} sx={{ p: 4 }}>
             <Typography variant="h3" sx={{ mb: 2, fontFamily: "Montserrat" }}>
-              Let&apos;s Get Started!
+              Let&apos;s get the party started!
             </Typography>
             <Typography variant="body1" gutterBottom sx={{ mb: 2 }}>
               Please enter your name and surname
@@ -65,7 +76,9 @@ const Registration = () => {
                   label="Surname"
                   value={formik.values.surname}
                   onChange={formik.handleChange}
-                  error={Boolean(formik.touched.surname && formik.errors.surname)}
+                  error={Boolean(
+                    formik.touched.surname && formik.errors.surname
+                  )}
                   helperText={formik.touched.surname && formik.errors.surname}
                 />
               </Grid>
@@ -94,7 +107,12 @@ const Registration = () => {
             <Button
               variant="contained"
               type="submit"
-              sx={{ fontFamily: "Montserrat", mt: 2, bgcolor: "#5f5f5f", color: "#f9f9f9" }}
+              sx={{
+                fontFamily: "Montserrat",
+                mt: 2,
+                bgcolor: "#5f5f5f",
+                color: "#f9f9f9",
+              }}
             >
               Let&apos;s Check!
             </Button>
