@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-interface stateInterface {
+export interface stateInterface {
   name: string;
   surname: string;
   predictedMood: string;

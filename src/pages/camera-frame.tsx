@@ -20,6 +20,7 @@ const CameraFrame = () => {
     ) {
       router.push("/registration");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleCapture = React.useCallback(() => {
     try {
