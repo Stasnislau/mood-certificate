@@ -8,12 +8,19 @@ import { useRouter } from "next/router";
 const CameraFrame = () => {
   const { state } = useContext(Context);
   const router = useRouter();
-  console.log(state);
   const [photoSrc, setPhotoSrc] = useState<string | undefined>(undefined);
   const webcamRef = React.useRef<Webcam>(null);
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  useEffect(() => {
+    if (
+      !state.name ||
+      !state.surname ||
+      !state.predictedMood
+    ) {
+      router.push("/registration");
+    }
+  }, []);
   const handleCapture = React.useCallback(() => {
     try {
       const photo = webcamRef.current?.getScreenshot();
