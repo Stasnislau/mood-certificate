@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Context } from "../pages/_app.tsx";
 import Webcam from "react-webcam";
+import { uploadImage } from "@/services/picture.service";
 import { useRouter } from "next/router";
 
 const CameraFrame = () => {
@@ -13,14 +14,10 @@ const CameraFrame = () => {
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    if (
-      !state.name ||
-      !state.surname ||
-      !state.predictedMood
-    ) {
+    if (!state.name || !state.surname || !state.predictedMood) {
       router.push("/registration");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleCapture = React.useCallback(() => {
     try {
@@ -31,6 +28,7 @@ const CameraFrame = () => {
       if (!photo) {
         throw new Error("Photo is not captured");
       }
+
       setPhotoSrc(photo);
       setError(null);
     } catch (error: any) {
@@ -38,11 +36,33 @@ const CameraFrame = () => {
     }
   }, [webcamRef, setPhotoSrc]);
 
-  const handleSubmit = () => {
+  function dataURLtoBlob(dataurl: string) {
+    const arr = dataurl.split(",");
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  }
+
+  const handleSubmit = async () => {
     // send request to backend to get mood
+    if (!photoSrc) {
+      setError("No photo to submit");
+      return;
+    }
+    try {
+      const response = await uploadImage(dataURLtoBlob(photoSrc));
+      const data = await response;
+      state.discoveredMood = data.mood;
+    } catch (error: any) {
+      setError(error.message);
+    }
     state.dateOfSurvey = new Date().toLocaleDateString();
     state.timeOfSurvey = new Date().toLocaleTimeString();
-    state.discoveredMood = "to be implemented";
     state.photo = photoSrc;
     router.push("/certificate");
   };

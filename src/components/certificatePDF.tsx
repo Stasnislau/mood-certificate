@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface CertificateProps {
   name: string;
@@ -61,8 +61,6 @@ const Certificate = (props: CertificateProps) => {
       backgroundColor: "white",
     },
   });
-
-  console.log("props", props);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
