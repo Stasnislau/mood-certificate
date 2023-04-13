@@ -29,40 +29,66 @@ const Certificate = () => {
         <Paper elevation={3} sx={{ p: 4, maxWidth: 700 }}>
           <Grid item xs={12} id="certificate">
             <Typography
-              variant="h4"
+              variant="h3"
               component="h1"
               gutterBottom
               sx={{
-                fontFamily: "Arial, sans-serif",
+                fontFamily: "Montserrat, sans-serif",
                 fontWeight: "bold",
                 textAlign: "center",
+                color: "#2c3e50",
+                mb: 2,
               }}
             >
               Certificate of Completion
             </Typography>
-
-            <Box sx={{ mb: 4 }}>
-              <img
-                src={state.photo}
-                alt={state.name}
-                style={{ width: "100%" }}
-              />
-            </Box>
-
-            <Typography variant="body1" gutterBottom>
+            <Box
+              component="img"
+              sx={{
+                width: "100%",
+                maxHeight: "300px",
+                objectFit: "contain",
+                mb: 2,
+              }}
+              src={state.photo}
+            ></Box>
+            <Typography
+              variant="body1"
+              gutterBottom
+              sx={{
+                fontFamily: "Open Sans, sans-serif",
+                fontSize: "18px",
+                mb: 2,
+              }}
+            >
               This certificate is awarded to {`${state.name} ${state.surname}`}{" "}
               for completing the Mood Checker survey on{" "}
               {`${state.dateOfSurvey}, ${state.timeOfSurvey}.`}
             </Typography>
-
-            <Typography variant="body1" gutterBottom>
+            <Typography
+              variant="body1"
+              gutterBottom
+              sx={{
+                fontFamily: "Open Sans, sans-serif",
+                fontSize: "18px",
+                mb: 2,
+              }}
+            >
               According to our system, {`${state.name}`} was feeling{" "}
-              {`${state.discoveredMood}`} during the survey. {`${state.name}`}{" "}
-              also indicated that they were feeling {`${state.predictedMood}`}{" "}
-              at the time of the check.
+              <strong>{`${state.discoveredMood}`}</strong> during the survey.{" "}
+              {`${state.name}`} also indicated that they were feeling{" "}
+              <strong>{`${state.predictedMood}`}</strong> at the time of the
+              check.
             </Typography>
-
-            <Typography variant="body1" gutterBottom>
+            <Typography
+              variant="body1"
+              gutterBottom
+              sx={{
+                fontFamily: "Open Sans, sans-serif",
+                fontSize: "18px",
+                mb: 4,
+              }}
+            >
               We hereby certify that this person completed the survey fairly and
               that the results of the survey are valid.
             </Typography>
@@ -75,11 +101,16 @@ const Certificate = () => {
                 setClient(true);
               }}
               sx={{
-                fontFamily: "Arial, sans-serif",
+                fontFamily: "Montserrat, sans-serif",
                 fontWeight: "bold",
                 fontSize: "18px",
                 textTransform: "uppercase",
                 mt: 4,
+                borderRadius: "20px",
+                background: "#3498db",
+                "&:hover": {
+                  background: "#2980b9",
+                },
               }}
             >
               {client ? <CertificatePDF {...state} /> : "Download Certificate"}

@@ -2,6 +2,7 @@ import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 
 import { Context } from "../pages/_app.tsx";
+import { LoadingButton } from "@mui/lab";
 import Webcam from "react-webcam";
 import { uploadImage } from "@/services/picture.service";
 import { useRouter } from "next/router";
@@ -13,6 +14,7 @@ const CameraFrame = () => {
   const webcamRef = React.useRef<Webcam>(null);
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     if (!state.name || !state.surname || !state.predictedMood) {
       router.push("/registration");
@@ -55,11 +57,14 @@ const CameraFrame = () => {
       return;
     }
     try {
+      setIsLoading(true);
       const response = await uploadImage(dataURLtoBlob(photoSrc));
       const data = await response;
       state.discoveredMood = data.mood;
     } catch (error: any) {
       setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
     state.dateOfSurvey = new Date().toLocaleDateString();
     state.timeOfSurvey = new Date().toLocaleTimeString();
@@ -196,14 +201,14 @@ const CameraFrame = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Button
+                  <LoadingButton
                     variant="contained"
-                    color="success"
                     onClick={handleSubmit}
+                    loading={isLoading}
                     sx={{ fontFamily: "Montserrat" }}
                   >
                     Submit
-                  </Button>
+                  </LoadingButton>
                 </Grid>
                 <Grid
                   item

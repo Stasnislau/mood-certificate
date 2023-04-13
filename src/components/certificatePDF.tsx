@@ -22,14 +22,17 @@ interface CertificateProps {
 const Certificate = (props: CertificateProps) => {
   const styles = StyleSheet.create({
     page: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#fff",
       padding: 50,
+      fontFamily: "Helvetica",
     },
     title: {
       fontSize: 30,
       fontWeight: "bold",
       textAlign: "center",
       marginBottom: 20,
+      fontFamily: "Times-Bold",
+      color: "#FF5A5F",
     },
     image: {
       width: "100%",
@@ -40,6 +43,7 @@ const Certificate = (props: CertificateProps) => {
       textAlign: "justify",
       lineHeight: 1.5,
       marginBottom: 10,
+      fontFamily: "Times-Roman",
     },
     boldText: {
       fontSize: 14,
@@ -47,13 +51,20 @@ const Certificate = (props: CertificateProps) => {
       textAlign: "justify",
       lineHeight: 1.5,
       marginBottom: 10,
+      fontFamily: "Times-Bold",
     },
     signature: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 1,
-      padding: 30,
+      marginTop: 50,
+      paddingTop: 10,
+      borderTopWidth: 1,
+      borderTopColor: "#ccc",
+    },
+    signatureText: {
+      fontSize: 12,
+      fontFamily: "Times-Roman",
     },
     signatureImage: {
       width: 106,
@@ -64,34 +75,34 @@ const Certificate = (props: CertificateProps) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Text style={styles.title}>Certificate of Completion</Text>
+        <Text style={styles.title}>Mood Certificate</Text>
         {props.photo && <Image style={styles.image} src={props.photo} />}
         <Text style={styles.text}>
           This certificate is awarded to{" "}
-          <Text
-            style={styles.boldText}
-          >{`${props.name} ${props.surname}`}</Text>{" "}
-          for completing the Mood Checker survey on{" "}
-          <Text
-            style={styles.boldText}
-          >{`${props.dateOfSurvey}, ${props.timeOfSurvey}`}</Text>
+          <Text style={styles.boldText}>
+            {`${props.name} ${props.surname}`}
+          </Text>{" "}
+          for successfully completing the Mood Checker survey on{" "}
+          <Text style={styles.boldText}>
+            {`${props.dateOfSurvey}, ${props.timeOfSurvey}`}
+          </Text>
           .
         </Text>
         <Text style={styles.text}>
-          According to our system,{" "}
+          Our system detected that during the survey,{" "}
           <Text style={styles.boldText}>{props.name}</Text> was feeling{" "}
-          <Text style={styles.boldText}>{props.discoveredMood}</Text> during the
-          survey. <Text style={styles.boldText}>{props.name}</Text> also
-          indicated that they were feeling{" "}
-          <Text style={styles.boldText}>{props.predictedMood}</Text> at the time
-          of the check.
+          <Text style={styles.boldText}>{props.discoveredMood}</Text>.
+          Additionally, they reported feeling{" "}
+          <Text style={styles.boldText}>{props.predictedMood}</Text>.
         </Text>
         <Text style={styles.text}>
           We hereby certify that this person completed the survey fairly and
-          that the results of the survey are valid.
+          that the results are valid.
         </Text>
         <View style={styles.signature}>
-          <Text style={styles.text}>Quality controller Mr. J. Smith: </Text>
+          <Text style={styles.signatureText}>
+            Quality controller: Mr. J. Smith
+          </Text>
           <Image style={styles.signatureImage} src="signature.png" />
         </View>
       </Page>
@@ -100,12 +111,18 @@ const Certificate = (props: CertificateProps) => {
 };
 
 const CertificatePDF = (props: CertificateProps) => {
+  const styles = StyleSheet.create({
+    link: {
+      textDecoration: "none",
+    },
+  });
   const [client, setClient] = useState(false);
   useEffect(() => {
     setClient(true);
   }, []);
   return (
     <PDFDownloadLink
+      style={styles.link}
       document={<Certificate {...props} />}
       fileName="certificate.pdf"
     >
