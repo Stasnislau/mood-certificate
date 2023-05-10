@@ -8,7 +8,7 @@ const store = new Store();
 
 export const Context = createContext<Store>(store);
 const existingRoutes = [
-  "/intro",
+  "/",
   "/registration",
   "/camera-frame",
   "/certificate",
