@@ -3,6 +3,7 @@ import Router from "next/router";
 import Store from "../store";
 import { createContext } from "react";
 import { useEffect } from "react";
+import "./styles.css";
 
 const store = new Store();
 
