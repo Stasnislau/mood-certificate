@@ -40,7 +40,7 @@ const Certificate = () => {
                 mb: 2,
               }}
             >
-              Certificate of Completion
+              Mood Certificate
             </Typography>
             <Box
               component="img"

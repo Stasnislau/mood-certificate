@@ -4,6 +4,7 @@ import Store from "../store";
 import { createContext } from "react";
 import { useEffect } from "react";
 import "./styles.css";
+import Head from "next/head";
 
 const store = new Store();
 
@@ -17,6 +18,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <Context.Provider value={store}>
+      <Head>
+        <title>Mood Checker</title>
+        <meta name="description" content="Mood Checker" />
+      </Head>
       <Component {...pageProps} />
     </Context.Provider>
   );
