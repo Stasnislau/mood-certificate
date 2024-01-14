@@ -110,7 +110,6 @@ const Registration = () => {
               sx={{
                 fontFamily: "Montserrat",
                 mt: 2,
-                bgcolor: "#5f5f5f",
                 color: "#f9f9f9",
               }}
             >

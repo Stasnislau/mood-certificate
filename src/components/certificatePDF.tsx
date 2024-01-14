@@ -114,6 +114,7 @@ const CertificatePDF = (props: CertificateProps) => {
   const styles = StyleSheet.create({
     link: {
       textDecoration: "none",
+      color: "#fff",
     },
   });
   const [client, setClient] = useState(false);
