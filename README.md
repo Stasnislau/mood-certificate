@@ -42,9 +42,10 @@ python server.py
 
 ## Preview
 ![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/0be6e7ab-5185-4ee3-8c2b-1f92792c16a5)
-![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/01884498-8b17-433e-9351-1b45669aa046)
+![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/c799762f-d0df-4630-8b8c-0e5fe9ea84e2)
 ![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/6396ec89-0a9e-4e8a-8f20-ba062e99ad32)
-![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/e9507306-a175-4ff5-8a88-8c368b11a172)
+![image](https://github.com/Stasnislau/mood-certificate/assets/56834401/55dede77-5a30-42a6-8455-0e5b6effb5c3)
+
 
 
 
